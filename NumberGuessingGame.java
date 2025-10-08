@@ -1,45 +1,27 @@
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
-public class NumberGuessingGame {
+public class NumberGuess {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
-
-        int maxAttempts = 5;
-        int maxRounds = 3;
+        Scanner sc = new Scanner(System.in);
+        Random r = new Random();
         int score = 0;
 
-        for (int round = 1; round <= maxRounds; round++) {
-            int numberToGuess = random.nextInt(100) + 1;
-            int attempts = 0;
-
-            System.out.println("\nRound " + round);
-            System.out.println("Guess a number between 1 and 100.");
-
-            while (attempts < maxAttempts) {
-                System.out.print("Enter your guess: ");
-                int guess = scanner.nextInt();
-                attempts++;
-
-                if (guess == numberToGuess) {
-                    System.out.println("Congratulations! You guessed the number in " + attempts + " attempts.");
+        for (int round = 1; round <= 3; round++) {
+            int num = r.nextInt(100) + 1, tries = 0;
+            System.out.println("\nRound " + round + " - Guess a number (1–100):");
+            while (tries++ < 5) {
+                System.out.print("Try " + tries + ": ");
+                int guess = sc.nextInt();
+                if (guess == num) {
+                    System.out.println("🎉 Correct in " + tries + " tries!");
                     score++;
                     break;
-                } else if (guess < numberToGuess) {
-                    System.out.println("Too low. Try again.");
-                } else {
-                    System.out.println("Too high. Try again.");
                 }
+                System.out.println(guess < num ? "Too low!" : "Too high!");
             }
-
-            if (attempts == maxAttempts) {
-                System.out.println("You've reached the maximum number of attempts. The number was " + numberToGuess);
-            }
+            if (tries > 5) System.out.println("❌ Out of tries! Number was " + num);
         }
-
-        System.out.println("\nGame Over! Your final score is: " + score + "/" + maxRounds);
-        scanner.close();
-}}
-
-
+        System.out.println("\n🏁 Game Over! Final Score: " + score + "/3");
+        sc.close();
+    }
+}
